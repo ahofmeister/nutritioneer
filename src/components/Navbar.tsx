@@ -9,46 +9,47 @@ const NavbarLink = function <T extends string>({href, label}: {
     href: Route<T> | URL,
     label: String
 }) {
-    return <Link href={href}
-                 className={'hover:text-pastel-green-300 mx-5'}>
+    return <Link href={href} className={'hover:text-pastel-green-300 mx-5'}>
         {label}
     </Link>;
+}
+
+interface User {
+    email?: string | undefined
 }
 
 const Navbar = () => {
     const supabase = createClientComponentClient();
 
-    const [data, setData] = useState()
+    const [user, setUser] = useState<User>({email: ''})
 
-    async function getProfile() {
-
+    async function getUser() {
         const {
             data
         } = await supabase.auth.getUser()
 
-        if (data) {
-            // @ts-ignore
-            setData(data)
+        if (data && data.user) {
+            setUser(data.user)
         }
     }
 
     useEffect(() => {
-        getProfile()
+        getUser()
     }, [])
 
     return <nav className="sticky top-0 border-b border-b-gray">
         <div className="grid grid-cols-2 p-4">
             <div className={""}>
                 <NavbarLink href={'/'} label={'Home'}/>
-                {data?.user &&
+                {user &&
                     <NavbarLink href={'/foods'} label={'Foods'}/>
                 }
             </div>
             <div className={'justify-self-end'}>
-                {data?.user &&
+                {user &&
                     (
                         <div className={"flex flex-row gap-20"}>
-                            {data.user.email}
+                            {user.email}
                             <LogoutButton/>
                         </div>
 
