@@ -21,7 +21,7 @@ interface User {
 const Navbar = () => {
     const supabase = createClientComponentClient();
 
-    const [user, setUser] = useState<User>({email: ''})
+    const [user, setUser] = useState<User>()
 
     async function getUser() {
         const {
