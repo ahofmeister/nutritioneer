@@ -1,6 +1,8 @@
 import './globals.css'
 import Navbar from "@/src/components/Navbar";
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
     title: 'Nutritioneer',
     description: 'Track your food',
